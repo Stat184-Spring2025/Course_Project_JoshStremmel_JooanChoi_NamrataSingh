@@ -34,22 +34,22 @@ This project has several key dates that you need to be aware of.
 
 We present the guidelines as a checklist in this file. This means that your team can edit this file and check items off the list by placing an x inside of the square brackets at the start of each item (i.e., [x]). This will help your team keep track of what you've completed and what you have left to do.
 
-- [ ] Read through the Project Guidelines.
-- [ ] Find 1 or 2 other individuals from the same section of Stat 184 who you want to work with and form a team. (We will help you form teams if you do not already have one by the team finalization date for your section.)
-- [ ] Create a repo using this template repo. Name your repo `Sec#_FP_Name1_Name2_Name3` where `Sec#` is your section of Stat184 (i.e., `Sec1`, `Sec2`, `Sec3`, or `Sec4`) and `Name#` is replaced with the names of each team member.
-  - [ ] The owner of the repo should be `Stat184-Spring2025`. 
-- [ ] Make sure that each team member has access to the repo.
-- [ ] Come up with a topic and set of research questions your team will explore.
-- [ ] Make a plan for your work. We suggested putting together your work plan ASAP.
-- [ ] Locate appropriate data sources for your project.
-  - [ ] Your main data source may __not__ be one that we used in class. If you are interested in using data found in an R package, please consult with your instructor first.
-  - [ ] Supplementary data sources may come from anywhere.
-- [ ] Read in your data and perform any necessary data tidying, wrangling, and cleaning.
-- [ ] Conduct Exploratory Data Analysis.
-- [ ] Prepare a reproducible report.
-  - [ ] Use a QMD file; the output type is PDF.
-  - [ ] The report should be well organized with section headings.
-  - [ ] Code should __only__ be found in a Code Appendix at the end for a PDF, not in the body of your report.
+- [x] Read through the Project Guidelines.
+- [x] Find 1 or 2 other individuals from the same section of Stat 184 who you want to work with and form a team. (We will help you form teams if you do not already have one by the team finalization date for your section.)
+- [x] Create a repo using this template repo. Name your repo `Sec#_FP_Name1_Name2_Name3` where `Sec#` is your section of Stat184 (i.e., `Sec1`, `Sec2`, `Sec3`, or `Sec4`) and `Name#` is replaced with the names of each team member.
+  - [x] The owner of the repo should be `Stat184-Spring2025`. 
+- [x] Make sure that each team member has access to the repo.
+- [] Come up with a topic and set of research questions your team will explore.
+- [x] Make a plan for your work. We suggested putting together your work plan ASAP.
+- [x] Locate appropriate data sources for your project.
+  - [x] Your main data source may __not__ be one that we used in class. If you are interested in using data found in an R package, please consult with your instructor first.
+  - [x] Supplementary data sources may come from anywhere.
+- [x] Read in your data and perform any necessary data tidying, wrangling, and cleaning.
+- [x] Conduct Exploratory Data Analysis.
+- [x] Prepare a reproducible report.
+  - [x] Use a QMD file; the output type is PDF.
+  - [x] The report should be well organized with section headings.
+  - [x] Code should __only__ be found in a Code Appendix at the end for a PDF, not in the body of your report.
     - __TIP!__ The following code chunk can be added to a QMD file and will automatically build a section of code.
 ````
       ```{r codeAppend, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
