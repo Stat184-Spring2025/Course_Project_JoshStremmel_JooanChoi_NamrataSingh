@@ -1,0 +1,106 @@
+---
+title: "Happiness around the World (2015)"
+author: "Josh Stremmel, Jooan Choi, Namrata Singh"
+format:
+  pdf:
+    toc: true
+csl: apa7.csl #or mla9.csl
+execute:
+  echo: false
+---
+
+## Overview
+
+The World Happiness Report puts a number on something we all care about but rarely measure: how happy people are, country by country. Our project digs into the 2015 report to see what really drives those scores— is it money, health, freedom, or something else? By playing with the data we want to tell a short, visual story about what separates the happiest places from the not-so-happy ones, and maybe learn what our own country could do better. It’s basically a data-powered vibe check for the whole planet.
+
+## Data Import
+```{r}
+library(tidyverse)
+library(janitor)
+
+happy <- read_csv("2015.csv", show_col_types = FALSE) |>
+         clean_names()
+
+```
+
+## Data Provence
+We got our dataset from Kaggle, and it’s based on the 2015 World Happiness Report, which is part of an ongoing global survey that ranks countries by how happy their citizens say they are. The data was originally collected by the Gallup World Poll, using a question called the Cantril ladder, where people rate their life on a scale from 0 (worst) to 10 (best). The goal of the report is to help governments and organizations understand what drives well-being. Each row in the dataset represents a country, and the columns include things like GDP per capita, social support, life expectancy, and freedom—factors that are believed to influence overall happiness.
+
+## FAIR and CARE
+This dataset follows the FAIR principles pretty well. It’s Findable because it’s publicly available on Kaggle with a clear title and metadata. It’s Accessible since anyone can download it without special permissions. It’s Interoperable because it’s in CSV format, which works with pretty much any data tool. And it’s Reusable because it comes with a detailed description of how the data was collected, what the columns mean, and how it’s meant to be interpreted. The CARE principles mainly apply to data about Indigenous communities, so they don’t directly apply here, but we still think it’s important to recognize the cultural and political contexts behind any data involving people.
+
+## Exploratory Plot
+Figure 1 shows the relationship between GDP per capita and happiness score. We see a clear upward trend: wealthier countries tend to report higher happiness, although the trend flattens at the top.
+```{r}
+ggplot(happy, aes(economy_gdp_per_capita, happiness_score)) +
+  geom_point() +
+  geom_smooth() +
+  labs(x = "GDP per Capita (scaled)",
+       y = "Happiness Score")
+```
+
+## Data Tidying and Cleaning
+We summarize the structure and cleanliness of the dataset in Table 1.
+```{r}
+library(tidyverse)
+library(janitor)   # clean_names()
+library(skimr)     # quick data skim
+
+happy <- read_csv("2015.csv", show_col_types = FALSE) |>
+         clean_names() |>
+         mutate(
+           region = as.factor(region)          # treat Region as categorical
+         ) |>
+         drop_na()                             # 2015 data have no NAs, but good habit
+
+skimr::skim(happy)
+```
+
+## Exploratory Data Analysis
+```{r}
+# 1) Summary stats by Region
+eda_table <- happy |>
+  group_by(region) |>
+  summarise(
+    countries       = n(),
+    avg_happiness   = mean(happiness_score),
+    avg_gdp         = mean(economy_gdp_per_capita),
+    avg_life_expect = mean(health_life_expectancy),
+    .groups = "drop"
+  )
+
+# 2) Boxplot of Happiness Score by Region
+ggplot(happy, aes(region, happiness_score)) +
+  geom_boxplot(fill = "grey80") +
+  coord_flip() +
+  labs(x = NULL, y = "Happiness Score",
+       title = "How Happiness Varies by Region")
+
+# 3) Correlation plot of numeric variables
+library(GGally)
+happy |>
+  select(happiness_score,
+         economy_gdp_per_capita,
+         family,
+         health_life_expectancy,
+         freedom,
+         trust_government_corruption,
+         generosity) |>
+  GGally::ggpairs(title = "Pair-wise Relationships Among Key Metrics")
+
+#4) Top 10 Happiest Countries
+happy %>%
+  arrange(desc(happiness_score)) %>%
+  slice(1:10) %>%
+  ggplot(aes(x = reorder(country, happiness_score), y = happiness_score)) +
+  geom_col(fill = "skyblue") +
+  coord_flip() +
+  labs(title = "Top 10 Happiest Countries (2015)",
+       x = "Country",
+       y = "Happiness Score")
+
+```
+Figure 3 shows the top 10 countries ranked by their happiness scores in 2015. These countries all have strong economies, long life expectancies, and high levels of social support, reinforcing the earlier correlation findings.
+
+## Appendix
+```{r codeAppend, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}```
